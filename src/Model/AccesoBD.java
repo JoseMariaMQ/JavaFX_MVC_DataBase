@@ -5,6 +5,12 @@ import java.sql.*;
 public class AccesoBD {
     private Connection con;
     private PreparedStatement ps;
+    private Statement st;
+    private ResultSet rs;
+    private ResultSet rsFilas;
+
+    public Object [][] tablaInstrumentos;
+    private int cont = 0;
 
     public AccesoBD() {
     }
@@ -21,6 +27,7 @@ public class AccesoBD {
             //Objeto conexión
             con = DriverManager.getConnection(url, usuario, contraseña);
             System.out.println("Conexión con éxito!");
+            st = con.createStatement();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,8 +57,52 @@ public class AccesoBD {
             try {
                 //Cerrar conexiones
                 ps.close();
-                con.close();
+//                con.close();
                 System.out.println("Conexión con BBDD cerrada.");
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+    }
+
+    public void contarFilas() {
+        try {
+            rsFilas = st.executeQuery("SELECT * FROM instrumentos;");
+            while(rsFilas.next()) {
+                cont++;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            try {
+                rsFilas.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+    }
+
+    public void mostrarIntrumentos() {
+        contarFilas();
+        String sql = "SELECT * FROM instrumentos;";
+        try {
+
+            rs = st.executeQuery(sql);
+            tablaInstrumentos = new Object[cont][6];
+
+            for(int j=0; j<tablaInstrumentos.length; j++) {
+                rs.next();
+                for(int k=0; k<tablaInstrumentos[j].length; k++) {
+                    tablaInstrumentos[j][k] = rs.getString(k+2);
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            try {
+                st.close();
+                rs.close();
+                con.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
