@@ -3,7 +3,6 @@ package Controller;
 import Model.AccesoBD;
 import Model.Instrumento;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -14,9 +13,6 @@ import javafx.scene.input.MouseEvent;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-
-import static javafx.collections.FXCollections.observableArrayList;
-import static javafx.collections.FXCollections.singletonObservableList;
 
 public class Controller implements EventHandler<ActionEvent> {
 
@@ -36,6 +32,8 @@ public class Controller implements EventHandler<ActionEvent> {
     private Button btnRecibido;
     @FXML
     private Label confirmar;
+    @FXML
+    private Label mensaje;
 
     @FXML
     private Button btnMostrar;
@@ -74,36 +72,42 @@ public class Controller implements EventHandler<ActionEvent> {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 confirmar.setText(null);
+                mensaje.setText(null);
             }
         });
         cantidad.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 confirmar.setText(null);
+                mensaje.setText(null);
             }
         });
         peso.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 confirmar.setText(null);
+                mensaje.setText(null);
             }
         });
         fechaRecepcion.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 confirmar.setText(null);
+                mensaje.setText(null);
             }
         });
         transportista.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 confirmar.setText(null);
+                mensaje.setText(null);
             }
         });
         observaciones.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 confirmar.setText(null);
+                mensaje.setText(null);
             }
         });
     }
@@ -114,6 +118,7 @@ public class Controller implements EventHandler<ActionEvent> {
         if(actionEvent.getSource() == btnRecibido) {
             if(numeroSerie.getText() == null || cantidad.getText() == null || peso.getText() == null || fechaRecepcion.getValue() == null || transportista.getText() == null || observaciones.getText() == null) {
                 System.out.println("Completa todos los datos!");
+                mensaje.setText("Completa todos los campos!");
             } else {
                 //Descargamos el texto de los campos y lo convertimos al tipo de datos que necesitamos
                 numSerieInt = Integer.parseInt(numeroSerie.getText());
