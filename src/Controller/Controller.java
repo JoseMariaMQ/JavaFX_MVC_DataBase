@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.StageStyle;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -116,9 +117,16 @@ public class Controller implements EventHandler<ActionEvent> {
     public void handle(ActionEvent actionEvent) {
         //Acciones cuando se pulsa botón recibido
         if(actionEvent.getSource() == btnRecibido) {
+            //Comprobamos si los campos de entrada tienen introducidos datos
             if(numeroSerie.getText() == null || cantidad.getText() == null || peso.getText() == null || fechaRecepcion.getValue() == null || transportista.getText() == null || observaciones.getText() == null) {
                 System.out.println("Completa todos los datos!");
-                mensaje.setText("Completa todos los campos!");
+                mensaje.setText("¡Completa todos los campos!"); // Mostramos texto en la interfaz
+
+                Alert alerta = new Alert(Alert.AlertType.ERROR); //Se crea el tipo de alerta de Error
+                alerta.setContentText("¡Completa todos los campos!"); //Se agrega el texto de la información
+                alerta.initStyle(StageStyle.UTILITY); //Estilo del dialogo
+                alerta.show(); //Se muestra la ventana
+
             } else {
                 //Descargamos el texto de los campos y lo convertimos al tipo de datos que necesitamos
                 numSerieInt = Integer.parseInt(numeroSerie.getText());
